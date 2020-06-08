@@ -1,7 +1,7 @@
 {
     "title": "MyBook",
     "description": "笔记",
-    "author": "jinwandalaohu",
+    "author": "今晚打老虎",
     "output.name": "site",
     "language": "zh-hans",
     "gitbook": "3.2.3",
@@ -14,11 +14,18 @@
         "page-treeview",
         "back-to-top-button",
         "chapter-fold",
-        "code"
+        "code",
+        "tbfed-pagefooter",
+        "popup"
     ],
     "pluginsConfig": {
     	"code": {
 	       "copyButtons": true
-	    }
+	    },
+        "tbfed-pagefooter": {
+            "copyright":"Copyright &copy 今晚打老虎",
+            "modify_label": "该文章修订时间：",
+            "modify_format": "YYYY-MM-DD HH:mm:ss"
+        }
     }
 }

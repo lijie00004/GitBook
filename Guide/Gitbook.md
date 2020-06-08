@@ -1,61 +1,69 @@
 ---
-description: This is a short description of my page
+description: 变量
 ---
 
-# 安装和设置
+{{page.description}}
 
-* 安装好 `Node.js` 和 `NPM`
-* `npm install gitbook-cli -g`
+* [gitbook教程](http://gitbook.hushuang.me/setup.html)
 
-* `gitbook init`
+## 安装和设置
 
-* `gitbook init ./directory`指定目录创建一本书
+  * 安装好 `Node.js` 和 `NPM`
+  * `npm install gitbook-cli -g`
+  * `gitbook init`
+  * `gitbook init ./directory`指定目录创建一本书
 
-* `gitbook serve`
-* `gitbook build`
-* `gitbook fetch 4.0.0-alpha.1` 安装不同版本
+  * `gitbook serve`
+  * `gitbook build`
+  * `gitbook serve ./ --log=debug --debug` 调试
+  * `gitbook build ./ --log=debug --debug` 调试
 
-* `gitbook ls-remote` 列出可安装的远程版本
+  * `gitbook fetch 4.0.0-alpha.1` 安装不同版本
+  * `gitbook ls-remote` 列出可安装的远程版本
+  * `gitbook update` 更新
+  * `gitbook install` 安装插件
+  * `gitbook ls` 列出本地所有的版本
+  * `gitbook -V` 查看版本号
+  * `gitbook uninstall 2.6.7` 卸载指定版本号
+  * `gitbook fetch [version]` 获取[版本]下载并安装<版本>
+  * `gitbook help` 列出 gitbook 所有的命令
 
-* `gitbook build ./ --log=debug --debug` 调试
-* `gitbook serve ./ --log=debug --debug` 调试
+## 语法
 
-# 语法
+  * `[title](folder/readme.md#writing)` `#` 号能跳到指定标题
 
-* `[title](folder/readme.md#writing)` `#` 号能跳到指定标题
+  * `---` 分割线
 
-* `---` 分割线
+  * `#` 标题
 
-* `#` 标题
+  * `*斜体*`
 
-* `*斜体*`
+  * `**粗体**`
 
-* `**粗体**`
+  * `~~删除线~~`
 
-* `~~删除线~~`
+  * `[链接](http://www.gibook.site/)没有标题属性`
 
-* `[链接](http://www.gibook.site/)没有标题属性`
+  * `这是[一个示例][id]参考样式链接`
 
-* `这是[一个示例][id]参考样式链接`
+  * `[id]:http://www.gibook.site/ "可选标题这里"`
 
-* `[id]:http://www.gibook.site/ "可选标题这里"`
+  * `图片:![这是图片](../images/logo_200.png)`
 
-* `图片:![这是图片](../images/logo_200.png)`
+  * ```markdown
+    Kanye West说：-- 引用块
+    > 我们生活在未来
+    > 现在是我们的过去。
+    ```
 
-* ```markdown
-  Kanye West说：-- 引用块
-  > 我们生活在未来
-  > 现在是我们的过去。
-  ```
-
-* ```markdown
-  |第一标题|第二标题|
-  | ----- | ----- |
-  |内容单元|内容单元|
-  ```
+  * ```markdown
+    |第一标题|第二标题|
+    | ----- | ----- |
+    |内容单元|内容单元|
+    ```
 
 
-# book.json
+## book.json
 
 | 变量          | 说明                                                         |
 | ------------- | ------------------------------------------------------------ |
@@ -83,14 +91,11 @@ description: This is a short description of my page
 | `pdf.margin.right`  | 右边距(默认为“62”)                                           |
 | `pdf.margin.left`   | 左边距(默认为“62”)                                           |
 
-# 插件
+## 插件
 
-* `"page-treeview"`
-  * `D:\Git\GitBook\node_modules\gitbook-plugin-page-treeview\lib\index.js`
-  * 删除 `copyRight +`
-  * `	return renderContent ? `<div class="treeview__container">${copyRight + renderContent}</div>` : '';`
-
-* 
+  * `"page-treeview"`
+    * `D:\Git\GitBook\node_modules\gitbook-plugin-page-treeview\lib\index.js`
+    * 删除 `copyRight +`
 
 脚注参考前的文本。[^2]
 
