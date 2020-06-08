@@ -1,0 +1,24 @@
+{
+    "title": "MyBook",
+    "description": "笔记",
+    "author": "jinwandalaohu",
+    "output.name": "site",
+    "language": "zh-hans",
+    "gitbook": "3.2.3",
+    "root": ".",
+    "plugins": [
+        "-lunr", 
+        "-search", 
+        "search-pro",
+        "splitter",
+        "page-treeview",
+        "back-to-top-button",
+        "chapter-fold",
+        "code"
+    ],
+    "pluginsConfig": {
+    	"code": {
+	       "copyButtons": true
+	    }
+    }
+}
