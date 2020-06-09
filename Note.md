@@ -3,4 +3,4 @@
 
 * `gitbook` 不能跳转
   * `_book/gitbook/theme.js`
-  * `if(m)` 改为 `if(false)`
+  * `if(m)for(n.handler&&` 改为 `if(false)`
