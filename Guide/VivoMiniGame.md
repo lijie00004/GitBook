@@ -1,5 +1,182 @@
-
 [Vivo教程网站](https://minigame.vivo.com.cn/documents/#/lesson/open-ability/ad)
+
+---
+
+CocosCreator构建配置: ![CocosCreator构建配置](.\images\vivoCreateCofig.png)
+
+![服务器布置](.\images\serverVivo.png)
+
+---
+
+```javascript
+createAdBanner() {
+    console.log("创建Banner广告")
+    this.bannerAd = qg.createBannerAd({
+        posId: 'c29da96e6edb4020a445bef2dfb7fc19',
+        style: {} // 底部中间位置
+    });
+    this.bannerAd.onError(err => {
+        // console.log("banner广告加载失败", err);
+        // qg.showToast({
+        //     message: "banner广告加载失败" + JSON.stringify(err)
+        // })
+    });
+    // 手动关闭广告
+    this.bannerAd.onClose(err => {
+        this.countTime = 0;
+        // qg.showToast({
+        //     message: "banner广告关闭" + JSON.stringify(err)
+        // })
+    });
+
+    this.bannerAd.show().then(()=>{ 
+        // console.log('banner广告展示完成');
+    }).catch((err)=>{
+        // qg.showToast({
+        //     message: 'banner广告展示失败' + JSON.stringify(err)
+        // })
+    })
+},
+```
+
+```javascript
+createRewardedAd(foo) {
+    console.log("创建激励广告")
+    this.foo = foo; // 正常播完后，奖励函数
+    if (this.countTime_reward <= 60) {
+        qg.showToast({
+            message: "时间间隔要大于60秒"
+        })
+        return false;
+    }
+    if (this.rewardedAd) {
+        this.rewardedAd.load()
+        return true;
+    }
+    this.rewardedAd = qg.createRewardedVideoAd({
+        posId:'3a4c61abe6304f08b9a4f3e60fbf749e',
+    });
+    // this.rewardedAd.onError(err => {
+    //     qg.showToast({
+    //         message: "激励视频广告加载失败" + JSON.stringify(err)
+    //     })
+    // });
+    this.rewardedAd.onLoad(res => {
+        if(gb.isVoice) {
+            gb.VoiceMgr.pauseBg();
+        }
+        // console.log('激励视频广告加载完成-onload触发', JSON.stringify(res));
+        this.rewardedAd.show().then(()=>{ 
+            // qg.showToast({
+            //     message: "激励视频广告展示完成"
+            // })
+        }).catch((err)=>{
+            // qg.showToast({
+            //     message: "激励视频广告展示失败" + JSON.stringify(err)
+            // })
+        }) 
+    })
+    const func = (res)=>{
+        if(gb.isVoice) {
+            gb.VoiceMgr.resumeBg();
+        }
+        this.countTime_reward = 0;
+        if (res && res.isEnded) {
+            this.foo()
+            // qg.showToast({
+            //     message: "正常播放结束，可以下发游戏奖励"
+            // })
+        } else {
+            // qg.showToast({
+            //     message: "播放中途退出，不下发游戏奖励"
+            // })
+        }
+    }
+    this.rewardedAd.onClose(func);
+    return true
+}
+```
+
+```javascript
+updateNativeAd() {
+    this.levelPreNode.getChildByName("ad").active = false;
+    console.log("创建原生广告")
+    if (this.nativeAd) {
+        this.nativeAd.load()
+        return;
+    }
+    
+    this.nativeAd = qg.createNativeAd({
+        posId:'2a7f56a5142941dea9fe9830d4d6f2e8',
+    });
+    this.nativeAd.onLoad(res => {
+        let nativeCurrentAd;
+        if (res && res.adList){
+            nativeCurrentAd = res.adList.pop();
+        }
+        
+        var adNode = this.levelPreNode.getChildByName("ad");
+        var imgUrlListNode = adNode.getChildByName("imgUrlList");
+        var iconNode = adNode.getChildByName("icon");
+        var titleNode = adNode.getChildByName("title");
+        var descNode = adNode.getChildByName("desc");
+        var advertisingNode = adNode.getChildByName("advertising");
+        if (!nativeCurrentAd) {
+            return;
+        }
+        adNode.active = true;
+        imgUrlListNode.active = false;
+        iconNode.active = false;
+        titleNode.anchorX = 0.5;
+        descNode.anchorX = 0.5;
+        titleNode.x = 0;
+        descNode.x = 0;
+
+        this.nativeCurrentAd = nativeCurrentAd;
+        this.nativeAd.reportAdShow({ adId: nativeCurrentAd.adId.toString() });
+
+        let imgUrl_url = nativeCurrentAd.imgUrlList[0]
+        if (imgUrl_url) {
+            cc.loader.load(imgUrl_url.toString(), (err, tex) => {
+                imgUrlListNode.active = true;
+                let spr = new cc.SpriteFrame(tex);
+                let sprRect = spr._rect;
+                imgUrlListNode.scale = Math.floor(280 / sprRect.height * 100) / 100;
+                imgUrlListNode.getComponent(cc.Sprite).spriteFrame = spr;
+                cc.loader.setAutoRelease(tex, true)
+
+                advertisingNode.x = imgUrlListNode.width * imgUrlListNode.scale / 2 - 10
+            });
+        }
+
+        let icon_url = nativeCurrentAd.icon.toString();
+        if (icon_url != "") {
+            cc.loader.load(icon_url, (err, tex) => {
+                iconNode.active = true;
+                titleNode.anchorX = 0;
+                descNode.anchorX = 0;
+                titleNode.x = -50;
+                descNode.x = -50;
+                let spr = new cc.SpriteFrame(tex);
+                let sprRect = spr._rect;
+                iconNode.scale = Math.floor(100 / sprRect.height * 100) / 100;
+                iconNode.getComponent(cc.Sprite).spriteFrame = spr;
+                cc.loader.setAutoRelease(tex, true)
+            });
+        }
+
+        titleNode.getComponent(cc.Label).string = nativeCurrentAd.title.toString();
+        descNode.getComponent(cc.Label).string = nativeCurrentAd.desc.toString();
+
+    })
+    this.nativeAd.onError(err => {
+        var adNode = this.levelPreNode.getChildByName("ad");
+        adNode.active = false;
+    });
+},
+```
+
+---
 
 ## 广告错误码信息
 
