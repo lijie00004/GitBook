@@ -10,6 +10,7 @@
 * [力扣](https://leetcode-cn.com/)
 * [TalkingData](https://www.talkingdata.com/product-game.jsp#/data-center/app-list)
 * [白日门论坛](https://www.ythya.com/forum.php)
+* [颜色大全](https://www.sioe.cn/yingyong/yanse-rgb-16/)
 ---
 * [Cocos 资料大全](https://github.com/fusijie/Cocos-Resource)
 * [Quick-Cocos2dx-Community](http://www.cocos2d-lua.org/doc/cocostudio/index.md)

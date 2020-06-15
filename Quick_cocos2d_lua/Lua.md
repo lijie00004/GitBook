@@ -1,3 +1,4 @@
+* `print(debug.traceback("Stack trace"))`
 * 将 `nil` 赋值给全局变量，相当于将其删除
 * `false nil` 为假，其它都为真，零和空字符串也视为真
 * `if not x then x = v end` 如果没初始化，初始化

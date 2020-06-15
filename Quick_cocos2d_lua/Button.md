@@ -1,4 +1,10 @@
 ```lua
+btn:setTouchEnabled(false)
+```
+
+
+
+```lua
 function MainScene:loadBtns()
 	local btns = {
 		{"Down_BGMVolume", function()
