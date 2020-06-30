@@ -8,7 +8,8 @@
   * [Git](Guide/Git.md)
   * [Gitbook](Guide/Gitbook.md)
   * [VivoGame](Guide/VivoMiniGame.md)
-
+  * [FacebookAd](Guide/FacebookAd.md)
+  
 * [Quick_cocos2d_lua](Quick_cocos2d_lua/Lua.md)
   * [Action](Quick_cocos2d_lua/Action.md)
   * [Audio](Quick_cocos2d_lua/Audio.md)
