@@ -1,4 +1,4 @@
-[GooglePlay教程网站](https://developer.android.google.cn/google/play/billing/billing_library_overview)
+[GooglePlay文档](https://developer.android.google.cn/google/play/billing/billing_library_overview)
 
 ## Sample
 

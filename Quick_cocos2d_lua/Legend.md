@@ -1,13 +1,13 @@
 ## UIRedPoint
 
 ```
-UIRedPoint.addUIPoint(btn, callfun) -- 注册点击事件
+UIRedPoint.addUIPoint(btn, callfun) -- 注册按钮点击事件
 ```
 
 ## UILuaLoader
 
 ```lua
-UILuaLoader.attachEffect(btnBuy,"outline(0e0600,1)")
+UILuaLoader.attachEffect(btnBuy,"outline(0e0600,1)") -- 设置描边
 ```
 
 
@@ -44,6 +44,9 @@ var.level_btnLevel:removeChildByName("img_bln")
 ## SceneAndLayer
 
 * `UISceneGame` 主场景
+* `PanelAvatar` 角色
+* `PanelBag` 背包
+* PanelRecycle 物品回收
 * `UIRightBottom` 主场景左下角技能区域
 * `RBPart` 配置，主场景左下角技能区域
 * `UIPropModel` 自动战斗和已经隐藏的箭头按钮和其它按钮

@@ -1,4 +1,4 @@
-[GoogleAd教程网站](https://developers.google.com/admob/android/banner)
+[GoogleAd文档](https://developers.google.com/admob/android/banner)
 
 ---
 

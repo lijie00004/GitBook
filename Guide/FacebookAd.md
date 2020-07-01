@@ -1,4 +1,4 @@
-[FacebookAd教程网站](https://developers.facebook.com/docs/audience-network/get-started/android/?translation)
+[FacebookAd文档](https://developers.facebook.com/docs/audience-network/get-started/android/?translation)
 
 ---
 

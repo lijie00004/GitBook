@@ -11,6 +11,8 @@
 * [TalkingData](https://www.talkingdata.com/product-game.jsp#/data-center/app-list)
 * [白日门论坛](https://www.ythya.com/forum.php)
 * [颜色大全](https://www.sioe.cn/yingyong/yanse-rgb-16/)
+* [stackoverflow](https://stackoverflow.com/)
+* [爱给网](http://www.aigei.com/)
 ---
 * [Cocos 资料大全](https://github.com/fusijie/Cocos-Resource)
 * [Quick-Cocos2dx-Community](http://www.cocos2d-lua.org/doc/cocostudio/index.md)
@@ -31,3 +33,4 @@
 * [吉林小说网](https://www.jilin55.com/1/1893/)
 * [新书包网](http://m.lashubao.org/wap.php?action=list&id=1376)
 * [好看小说](http://www.chuanyuezhihuanzhufengliu.com/)
+* [无名小说](https://www.wmtxt.com/)

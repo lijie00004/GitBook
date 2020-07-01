@@ -10,7 +10,7 @@
 * `cc.RotateTo:create(2, 180)`
 * `cc.FadeIn:create(2)` 淡入
 * `cc.FadeOut:create(2)` 淡出
-* ``cc.FateTo:create(2, 110)` 变化到指定透明度
+* `cc.FateTo:create(2, 110)` 变化到指定透明度
 * `cc.TintTo:create(1, 0, 255, 0)`
 * `cc.Blink:create(1, 2)`
 * `cc.DelayTime:create(2)`
