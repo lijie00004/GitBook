@@ -1,5 +1,8 @@
 ```lua
 btn:setTouchEnabled(false)
+btn:setBrightStyle(1) -- 0 正常状态，1 按下状态
+btn:setBright(boolean) -- true 正常状态，false 禁止状态
+btn:setFocused(boolean) -- true 按下状态, flase 正常状态
 ```
 
 

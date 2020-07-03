@@ -29,6 +29,7 @@ if var.xmlPageLevel then
 local num = NetClient:getTypeItemNum(itemId)
 
 NetClient.mCharacter.mLevel -- 玩家等级
+NetClient.severDay -- 服务器天数
 ```
 
 ## util
