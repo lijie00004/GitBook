@@ -71,6 +71,7 @@
 * `string.format("x = %d y = %d", 10, 20)`
 * `string.format("pi = %.4f", math.pi)`
 * `string.format("%02d%02d", 5, 11)`
+* `string.format("%.02f%%",3)`
 * `string.sub(s, i, j)` 等价 `s: sub(i, j)`
 * `string.find("a [word]", "[")` 报错, 因为"["在模式中具有特殊含义
 * `string.find("a [word]", "[", 1, true)` 开启简单模式，把"["当作简单字符串
