@@ -71,4 +71,6 @@ end)
 {n="txt_titile",id=32,parent=1,ax=0.5,ay=0.5,x=690,y=184,color="255|62|63",fr="DFYuan.ttf",olc="0,0,0,255",type=3,tag=46,v=true,fs=20,text="祝福值越高进",ols=0,},-- 红色
 {n="level_left",id=41,parent=1,w=20,h=60,ax=0.5,ay=0.5,x=51,y=513,color="255|208|66",fr="DFYuan.ttf",olc="76,0,0,255",type=3,tag=98,v=true,fs=20,text="体验",ht=1,ols=1,},-- 黄色加描边
 {n="Txt_lingyu",id=52,parent=1,ay=0.5,x=743,y=130,color="255|192|22",fr="DFYuan.ttf",olc="0,0,0,255",type=3,tag=42,v=true,fs=20,text="0/5",ols=1,}, -- 黄色
+{n="per",id=299,parent=300,ax=0.5,ay=0.5,x=146,y=160,color="255|244|153",fr="DFYuan.ttf",olc="226,32,0,255",type=3,tag=268,v=true,fs=20,text="精炼",ols=1,}, -- 白色，红色
+
 ```
