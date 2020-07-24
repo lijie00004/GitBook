@@ -8,6 +8,8 @@
   * [GoogleAd](Guide/GoogleAd.md)
   * [GooglePlay](Guide/GooglePlay.md)
   * [VivoGame](Guide/VivoMiniGame.md)
+* [JavaScript](JavaScript/state-machine.md)
+  * [state-machine](JavaScript/state-machine.md)
 * [Quick_cocos2d_lua](Quick_cocos2d_lua/Lua.md)
   * [Action](Quick_cocos2d_lua/Action.md)
   * [Audio](Quick_cocos2d_lua/Audio.md)

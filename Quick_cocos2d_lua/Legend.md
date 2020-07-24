@@ -27,9 +27,29 @@ if var.xmlPageLevel then
 
 ```lua
 local num = NetClient:getTypeItemNum(itemId)
+local num = NetClient:getItemNumByType(29160004)
+local clothDef = NetClient:getItemDefByPos(Const.ITEM_CLOTH_POSITION)
+-- 设置 元宝 和 金钱
+cc.EventProxy.new(NetClient,var.xmlPanel)
+	:addEventListener(Notify.EVENT_GAME_MONEY_CHANGE, PanelStore.updateGameMoney)
+if var.xmlPanel then
+    local mainrole = NetClient.mCharacter
+    local moneyLabel = {
+        {name="lblVcoin",	value =	mainrole.mVCoin or 0	,	},
+        {name="lblBVcoin",	value =	mainrole.mVCoinBind or 0,	},
+        {name="lblMoney",	value =	mainrole.mGameMoney or 0,	},
+        {name="lblBMoney",	value =	mainrole.mGameMoneyBind or 0,},
+    }
+    for _,v in ipairs(moneyLabel) do
+        var.xmlPanel:getWidgetByName(v.name):setString(v.value)
+    end
+end
 
 NetClient.mCharacter.mLevel -- 玩家等级
 NetClient.severDay -- 服务器天数
+MainRole._mainAvatar:NetAttr(Const.net_wing) -- 翅膀id
+MainRole._mainAvatar:NetAttr(Const.net_fashion) -- 时尚id
+MainRole._mainAvatar:NetAttr(Const.net_cloth) -- 衣服id
 ```
 
 ## util
@@ -74,3 +94,38 @@ end)
 {n="per",id=299,parent=300,ax=0.5,ay=0.5,x=146,y=160,color="255|244|153",fr="DFYuan.ttf",olc="226,32,0,255",type=3,tag=268,v=true,fs=20,text="精炼",ols=1,}, -- 白色，红色
 
 ```
+
+## Animation
+
+```lua
+-- 激战boss动画
+-- 资源地址 res/cloth
+local img_role = box:getChildByName("img_role")
+if not img_role then
+    img_role = cc.Sprite:create()
+    img_role:addTo(box):align(display.CENTER, 95, 20):setName("img_role")
+end
+-- 参数 1 是类型，写0就可以了
+-- 参数 2 是文件名 15009 (1500900)
+-- 参数 3 是第几个动画
+-- 参数 4 是延迟时间和间隔时间
+local animate = cc.AnimManager:getInstance():getPlistAnimate(0,15009,4,12)
+if animate then
+    img_role:stopAllActions()
+    img_role:runAction(cca.seq({
+    cca.rep(animate,10000),
+    cca.removeSelf()
+    }))
+end
+```
+
+```lua
+-- 资源地址 res/effect
+local img_role = var.xmlPageBag:getChildByName("img_role")
+if not img_role then
+    img_role = cc.Sprite:create()
+    img_role:addTo(var.xmlPageBag):align(display.CENTER, 226, 370):setName("img_role")
+end
+local sp = util.addEffect(img_role,"spriteEffect",4,effId,{x = -80 , y = -40})
+```
+

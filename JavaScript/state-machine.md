@@ -1,4 +1,8 @@
-## Example
+> `import StateMachine = require("./state-machine");`
+>
+> `state-machine.js`位于本目录下的res
+>
+> `https://github.com/jakesgordon/javascript-state-machine/tree/0d603577423244228cebcd62e60dbbfff27c6ea3`
 
 #### States and Transitions
 
@@ -160,3 +164,297 @@ amy.speak(); // 'my name is amy and I am idle'
 bob.speak(); // 'my name is bob and I am sleeping'
 ```
 
+#### 异步
+
+```javascript
+var fsm = new StateMachine({
+    init: 'menu',
+    transitions: [
+      { name: 'play', from: 'menu', to: 'game' },
+      { name: 'quit', from: 'game', to: 'menu' }
+    ],
+    methods: {
+      onEnterMenu: function() {
+        return new Promise(function(resolve, reject) {
+          $('#menu').fadeIn('fast', resolve)
+        })
+      },
+
+      onEnterGame: function() {
+        return new Promise(function(resolve, reject) {
+          $('#game').fadeIn('fast', resolve)
+        })
+      },
+
+      onLeaveMenu: function() {
+        return new Promise(function(resolve, reject) {
+          $('#menu').fadeOut('fast', resolve)
+        })
+      },
+
+      onLeaveGame: function() {
+        return new Promise(function(resolve, reject) {
+          $('#game').fadeOut('fast', resolve)
+        })
+      }
+    }
+})
+```
+
+#### 自定义 Data and Methods
+
+```javascript
+var fsm = new StateMachine({
+    init: 'A',
+    transitions: [
+      { name: 'step', from: 'A', to: 'B' }
+    ],
+    data: {
+      color: 'red'
+    },
+    methods: {
+      describe: function() {
+        console.log('I am ' + this.color);
+      }
+    }
+  });
+
+  fsm.state;      // 'A'
+  fsm.color;      // 'red'
+  fsm.describe(); // 'I am red'
+```
+
+```javascript
+var FSM = StateMachine.factory({
+    init: 'A',
+    transitions: [
+      { name: 'step', from: 'A', to: 'B' }
+    ],
+    //  <-- use a method that can be called for each instance
+    data: function(color) {      
+      return {
+        color: color
+      }
+    },
+    methods: {
+      describe: function() {
+        console.log('I am ' + this.color);
+      }
+    }
+  });
+
+  var a = new FSM('red'),
+      b = new FSM('blue');
+
+  a.state; // 'A'
+  b.state; // 'A'
+
+  a.color; // 'red'
+  b.color; // 'blue'
+
+  a.describe(); // 'I am red'
+  b.describe(); // 'I am blue'
+```
+
+#### Error Handling
+
+```javascript
+// 当前状态不允许的转换 会调用 onInvalidTransition
+var fsm = new StateMachine({
+    init: 'A',
+    transitions: [
+        { name: 'step',  from: 'A', to: 'B' },
+        { name: 'reset', from: 'B', to: 'A' }
+    ],
+    methods: {
+        onInvalidTransition: function(transition, from, to) {
+            cc.log("transition not allowed from that state");
+        }
+    }
+});
+    
+fsm.state;        // 'A'
+fsm.can('step');  // true
+fsm.can('reset'); // false
+
+fsm.reset();      //  <-- throws "transition not allowed from that state"
+```
+
+```javascript
+// 在上一个转变未完成，又进行新的转变，会调用 onPendingTransition
+var fsm = new StateMachine({
+    init: 'A',
+    transitions: [
+    { name: 'step', from: 'A', to: 'B' },
+    { name: 'step', from: 'B', to: 'C' }
+    ],
+    methods: {
+        onLeaveA: function() {
+        	this.step(); // 不建议在生命函数里这么使用
+        },
+        onPendingTransition: function(transition, from, to) {
+        	cc.log("已经在进行的转变");
+        }
+    }
+});
+
+fsm.state;       // 'A'
+fsm.can('step'), // true
+fsm.step();      //  已经在进行的转变
+```
+
+#### Initialization
+
+```javascript
+var fsm = new StateMachine({
+    transitions: [
+      { name: 'init', from: 'none', to: 'A' },
+      { name: 'step', from: 'A',    to: 'B' },
+      { name: 'step', from: 'B',    to: 'C' }
+    ]
+  });
+  fsm.state;    // 'none'
+  fsm.init();   // 'init()' transition 被显式地触发
+  fsm.state;    // 'A'
+
+var fsm = new StateMachine({
+    init: 'A',
+    transitions: [
+      { name: 'step', from: 'A', to: 'B' },
+      { name: 'step', from: 'B', to: 'C' }
+    ]
+});           // 'init()' transition fires from 'none' to 'A' during 构造
+  fsm.state;    // 'A'
+
+var FSM = StateMachine.factory({
+    init: 'A',
+    transitions: [
+      { name: 'step', from: 'A', to: 'B' },
+      { name: 'step', from: 'B', to: 'C' }
+    ]
+});
+
+  var fsm1 = new FSM(),   // 'init()' transition fires from 'none' to 'A' for fsm1
+      fsm2 = new FSM();   // 'init()' transition fires from 'none' to 'A' for fsm2
+```
+
+#### Lifecycle Events
+
+  * `onBeforeTransition` - fired before any transition
+  * `onLeaveState`       - fired when leaving any state
+  * `onTransition`       - fired during any transition
+  * `onEnterState`       - fired when entering any state
+  * `onAfterTransition`  - fired after any transition
+
+> 特定状态转换和名称的时间
+
+  * `onBefore<TRANSITION>` - fired before a specific TRANSITION begins
+  * `onLeave<STATE>`       - fired when leaving a specific STATE
+  * `onEnter<STATE>`       - fired when entering a specific STATE
+  * `onAfter<TRANSITION>`  - fired after a specific TRANSITION completes
+
+> 最简单的事件
+
+  * `on<TRANSITION>` - convenience shorthand for `onAfter<TRANSITION>`
+  * `on<STATE>`      - convenience shorthand for `onEnter<STATE>`
+
+> 观察生命周期事件
+
+```javascript
+fsm.observe('onStep', function() {
+    console.log('stepped');
+});
+
+fsm.observe({
+    onStep: function() { console.log('stepped');         }
+    onA:    function() { console.log('entered state A'); }
+    onB:    function() { console.log('entered state B'); }
+});
+
+var fsm = new StateMachine({
+    init: 'A',
+    transitions: [
+      { name: 'step', from: 'A', to: 'B' }
+    ],
+    methods: {
+      onStep: function() { console.log('stepped');         }
+      onA:    function() { console.log('entered state A'); }
+      onB:    function() { console.log('entered state B'); }
+    }
+});
+```
+
+> 生命周期事件参数
+
+  * **transition** - the transition name
+  * **from**       - the previous state
+  * **to**         - the next state
+
+```
+var fsm = new StateMachine({
+    transitions: [
+      { name: 'step', from: 'A', to: 'B' }
+    ],
+    methods: {
+      onTransition: function(lifecycle, arg1, arg2) {
+        console.log(lifecycle.transition); // 'step'
+        console.log(lifecycle.from);       // 'A'
+        console.log(lifecycle.to);         // 'B'
+        console.log(arg1);                 // 42
+        console.log(arg2);                 // 'hello'
+      }
+    }
+});
+
+fsm.step(42, 'hello'); // 自定义参数
+```
+
+> 生命周期事件名称
+
+```
+ var fsm = new StateMachine({
+    transitions: [
+      { name: 'do-with-dash',       from: 'has-dash',        to: 'has_underscore'   },
+      { name: 'do_with_underscore', from: 'has_underscore',  to: 'alreadyCamelized' },
+      { name: 'doAlreadyCamelized', from: 'alreadyCamelize', to: 'has-dash'         }
+    ],
+    methods: {
+      onBeforeDoWithDash:         function() { /* ... */ },
+      onBeforeDoWithUnderscore:   function() { /* ... */ },
+      onBeforeDoAlreadyCamelized: function() { /* ... */ },
+      onLeaveHasDash:             function() { /* ... */ },
+      onLeaveHasUnderscore:       function() { /* ... */ },
+      onLeaveAlreadyCamelized:    function() { /* ... */ },
+      onEnterHasDash:             function() { /* ... */ },
+      onEnterHasUnderscore:       function() { /* ... */ },
+      onEnterAlreadyCamelized:    function() { /* ... */ },
+      onAfterDoWithDash:          function() { /* ... */ },
+      onAfterDoWithUnderscore:    function() { /* ... */ },
+      onAfterDoAlreadyCamelized:  function() { /* ... */ }
+    }
+  });
+```
+
+> 生命周期事件顺序
+
+  * `onBeforeTransition`   - fired before any transition
+  * `onBefore<TRANSITION>` - fired before a specific TRANSITION
+  * `onLeaveState`         - fired when leaving any state
+  * `onLeave<STATE>`       - fired when leaving a specific STATE
+  * `onTransition`         - fired during any transition
+  * `onEnterState`         - fired when entering any state
+  * `onEnter<STATE>`       - fired when entering a specific STATE
+  * `on<STATE>`            - convenience shorthand for `onEnter<STATE>`
+  * `onAfterTransition`    - fired after any transition
+  * `onAfter<TRANSITION>`  - fired after a specific TRANSITION
+  * `on<TRANSITION>`       - convenience shorthand for `onAfter<TRANSITION>`
+
+> 取消过渡
+
+通过返回“false”来取消转换生命周期事件
+
+  * `onBeforeTransition`
+  * `onBefore<TRANSITION>`
+  * `onLeaveState`
+  * `onLeave<STATE>`
+  * `onTransition`
