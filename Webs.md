@@ -3,6 +3,8 @@
 * [google 浏览器](https://www.google.com/)
 * [google cloud platform](https://console.cloud.google.com/billing)
 ---
+* [微信小程序](https://mp.weixin.qq.com/wxamp/home)
+---
 * [yandex](https://yandex.com/)
 * [Facebook 开发者](https://developers.facebook.com/apps/674285536409021/settings/basic/)
 * [aws EC2](https://ap-northeast-1.console.aws.amazon.com/ec2/home?region=ap-northeast-1#Home:)
