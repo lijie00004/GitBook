@@ -79,7 +79,15 @@ img_wingl = cc.Sprite:create()	img_wingl:addTo(var.xmlPanel:getWidgetByName("img
 
 local filepath = "stateitem/wing/"..data_wing[level+1]..".png"
 asyncload_callback(filepath, img_wingl, function(filepath, texture)
-img_wingl:setTexture(filepath)
+	img_wingl:setTexture(filepath)
+end)
+
+-- 背景
+local imgBg = self.m_serverUI:getChildByName("imgSceneBg"):align(display.CENTER, display.cx, display.cy)
+asyncload_callback("needload/img_battle.png", imgBg, function (filepath, texture)
+	if utilapp.isObjectExist(imgBg) then
+    	imgBg:loadTexture(filepath):scale(cc.MAX_SCALE)
+    end
 end)
 ```
 
